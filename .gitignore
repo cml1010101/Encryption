@@ -1,0 +1,6 @@
+decrypt
+encrypt
+*.a
+*.o
+*.txt
+*.json
