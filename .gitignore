@@ -4,3 +4,5 @@ encrypt
 *.o
 *.txt
 *.json
+*.log
+*.deb
