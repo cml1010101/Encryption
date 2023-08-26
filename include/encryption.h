@@ -2,6 +2,7 @@
 #define ENCRYPTION_H
 #include <stddef.h>
 #include <stdint.h>
+#include <random>
 enum ENC_TYPE
 {
     ENC_AES256 = 0,
