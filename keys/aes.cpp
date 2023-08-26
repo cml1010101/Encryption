@@ -1,7 +1,6 @@
 #include <aes.h>
 #include <memory.h>
 #include <iostream>
-#include <boost/progress.hpp>
 using namespace std;
 uint8_t sbox[256] = {
     0x63, 0x7c, 0x77, 0x7b, 0xf2, 0x6b, 0x6f, 0xc5, 0x30, 0x01, 0x67, 0x2b, 0xfe, 0xd7, 0xab, 0x76,
@@ -403,7 +402,6 @@ void aes256::encrypt(const uint8_t* input, size_t input_size, uint8_t* output, c
     size_t num_blocks = (input_size + 15) / 16;
     uint8_t* round_key = new uint8_t[16 * (aes_nr[AES_256] + 1)];
     aes_expand_key(key, round_key, AES_256);
-    boost::progress_display pd(num_blocks);
     for (size_t i = 0; i < num_blocks; i++)
     {
         for (size_t j = 0; j < 16; j++)
@@ -412,7 +410,6 @@ void aes256::encrypt(const uint8_t* input, size_t input_size, uint8_t* output, c
             else buffer[j] = 0;
         }
         aes_encrypt_block(buffer, &output[i * 16], round_key, AES_256);
-        pd.operator++();
     }
     if (header != 0)
     {
@@ -427,7 +424,6 @@ void aes192::encrypt(const uint8_t* input, size_t input_size, uint8_t* output, c
     size_t num_blocks = (input_size + 15) / 16;
     uint8_t* round_key = new uint8_t[16 * (aes_nr[AES_192] + 1)];
     aes_expand_key(key, round_key, AES_192);
-    boost::progress_display pd(num_blocks);
     for (size_t i = 0; i < num_blocks; i++)
     {
         for (size_t j = 0; j < 16; j++)
@@ -436,7 +432,6 @@ void aes192::encrypt(const uint8_t* input, size_t input_size, uint8_t* output, c
             else buffer[j] = 0;
         }
         aes_encrypt_block(buffer, &output[i * 16], round_key, AES_192);
-        pd.operator++();
     }
     if (header != 0)
     {
@@ -451,7 +446,6 @@ void aes128::encrypt(const uint8_t* input, size_t input_size, uint8_t* output, c
     size_t num_blocks = (input_size + 15) / 16;
     uint8_t* round_key = new uint8_t[16 * (aes_nr[AES_128] + 1)];
     aes_expand_key(key, round_key, AES_128);
-    boost::progress_display pd(num_blocks);
     for (size_t i = 0; i < num_blocks; i++)
     {
         for (size_t j = 0; j < 16; j++)
@@ -460,7 +454,6 @@ void aes128::encrypt(const uint8_t* input, size_t input_size, uint8_t* output, c
             else buffer[j] = 0;
         }
         aes_encrypt_block(buffer, &output[i * 16], round_key, AES_128);
-        pd.operator++();
     }
     if (header != 0)
     {
@@ -475,7 +468,6 @@ void aes256::decrypt(const uint8_t* input, size_t input_size, uint8_t* output, c
     size_t num_blocks = (input_size + 15) / 16;
     uint8_t* round_key = new uint8_t[16 * (aes_nr[AES_256] + 1)];
     aes_expand_key(key, round_key, AES_256);
-    boost::progress_display pd(num_blocks);
     for (size_t i = 0; i < num_blocks; i++)
     {
         for (size_t j = 0; j < 16; j++)
@@ -484,7 +476,6 @@ void aes256::decrypt(const uint8_t* input, size_t input_size, uint8_t* output, c
             else buffer[j] = 0;
         }
         aes_decrypt_block(buffer, &output[i * 16], round_key, AES_256);
-        pd.operator++();
     }
 }
 void aes192::decrypt(const uint8_t* input, size_t input_size, uint8_t* output, const uint8_t* key)
@@ -493,7 +484,6 @@ void aes192::decrypt(const uint8_t* input, size_t input_size, uint8_t* output, c
     size_t num_blocks = (input_size + 15) / 16;
     uint8_t* round_key = new uint8_t[16 * (aes_nr[AES_192] + 1)];
     aes_expand_key(key, round_key, AES_192);
-    boost::progress_display pd(num_blocks);
     for (size_t i = 0; i < num_blocks; i++)
     {
         for (size_t j = 0; j < 16; j++)
@@ -502,7 +492,6 @@ void aes192::decrypt(const uint8_t* input, size_t input_size, uint8_t* output, c
             else buffer[j] = 0;
         }
         aes_decrypt_block(buffer, &output[i * 16], round_key, AES_192);
-        pd.operator++();
     }
 }
 void aes128::decrypt(const uint8_t* input, size_t input_size, uint8_t* output, const uint8_t* key)
@@ -511,7 +500,6 @@ void aes128::decrypt(const uint8_t* input, size_t input_size, uint8_t* output, c
     size_t num_blocks = (input_size + 15) / 16;
     uint8_t* round_key = new uint8_t[16 * (aes_nr[AES_128] + 1)];
     aes_expand_key(key, round_key, AES_128);
-    boost::progress_display pd(num_blocks);
     for (size_t i = 0; i < num_blocks; i++)
     {
         for (size_t j = 0; j < 16; j++)
@@ -520,6 +508,5 @@ void aes128::decrypt(const uint8_t* input, size_t input_size, uint8_t* output, c
             else buffer[j] = 0;
         }
         aes_decrypt_block(buffer, &output[i * 16], round_key, AES_128);
-        pd.operator++();
     }
 }
